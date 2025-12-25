@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import AdminLayout from "./Admin/AdminLayout";
+import Dashboard from "./Admin/Dashboard";
+import Users from "./Admin/Users";
+import Rooms from "./Admin/Rooms";
+import Bookings from "./Admin/Bookings";
+import CalendarPage from "./Admin/Calendar";
+import RequireAuth from "./RequireAuth";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+
+      {/* Protected admin routes */}
+      <Route element={<RequireAuth />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="rooms" element={<Rooms />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="calendar" element={<CalendarPage />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
